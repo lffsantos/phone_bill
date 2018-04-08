@@ -97,13 +97,3 @@ class CallBillingSerializer(serializers.ModelSerializer):
             "price":  'R$ {}'.format(instance.price),
         }
         return values
-
-    def to_internal_value(self, data):
-        return {
-            "destination": data.get('destination'),
-            "start_call":  data.get('start_call'),
-            "duration_call":  data.get('duration_call'),
-            "price":  None,
-            "phone_bill_id": data.get('phone_bill_id')
-        }
-
