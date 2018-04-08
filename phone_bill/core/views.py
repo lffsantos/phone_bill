@@ -1,4 +1,5 @@
 from django.db import IntegrityError
+import re
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from phone_bill.core.models import PhoneBill
@@ -27,12 +28,23 @@ def get_phone_bill(request):
         return Response({'source': 'this is a required field'}, status=400)
     period = params.get('period')
     month, year = None, None
+    if period:
+        validator = re.compile(
+            "^(1[0-2]|0[1-9]|\d)\/(20\d{2}|19\d{2}|0(?!0)\d|[1-9]\d)$"
+        )
+        if validator.match(period):
+            month, year = params.get('period').split('/')
+        else:
+            return Response({
+                'period': 'The format field is MM/YYYY, please informe a '
+                          'valid month/year'
+            })
 
     phone_bill = PhoneBill.objects.get_account(
         source=params.get('source'), month=month, year=year
     )
     if not phone_bill:
-        return Response({'Phone Bill not found'}, status=200)
+        return Response({'error': 'Phone Bill not found'}, status=200)
 
     serializer = PhoneBillSerializer(phone_bill)
     return Response(serializer.data, status=200)

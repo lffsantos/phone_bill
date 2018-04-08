@@ -77,15 +77,36 @@ class TestGetAccountCall(TestCase):
     }
 
     @parameterized.expand([
-        (json.dumps({'source': '99988526423'})),
+        (json.dumps({'source': '99988526423', 'expected': True})),
+        (json.dumps({'source': '99988526423', 'period': '12/2017',
+                     'expected': True})),
+        (json.dumps({'source': '1234', 'expected': False})),
+        (json.dumps({'source': '99988526423', 'period': '11/2017',
+                     'expected': False})),
+        (json.dumps({'source': '99988526423', 'period': '2017/12',
+                     'expected': False, 'period_invalid': True})),
+        (json.dumps({'period': '12/2017', 'expected': False})),
     ])
     def test_get_phone_bill(self, data):
-        response = self.client.get(r('get_phone_bill'), json.loads(data))
+        data = json.loads(data)
+        response = self.client.get(r('get_phone_bill'), data)
         result = response.data
-        for key, value in self.expected_account.items():
-            if key == 'calls':
-                for i, calls in enumerate(value):
-                    for k, v in calls.items():
-                        self.assertEqual(v, result['calls'][i][k])
+        if not data.get('source'):
+            self.assertEqual('this is a required field', result['source'])
+        else:
+            if not data['expected']:
+                if data.get('period_invalid'):
+                    self.assertEqual(
+                        'The format field is MM/YYYY, please informe '
+                        'a valid month/year', result['period']
+                    )
+                else:
+                    self.assertEqual('Phone Bill not found', result['error'])
             else:
-                self.assertEqual(value, result[key])
+                for key, value in self.expected_account.items():
+                    if key == 'calls':
+                        for i, calls in enumerate(value):
+                            for k, v in calls.items():
+                                self.assertEqual(v, result['calls'][i][k])
+                    else:
+                        self.assertEqual(value, result[key])
