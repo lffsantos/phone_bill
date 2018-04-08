@@ -1,3 +1,4 @@
+from datetime import timedelta
 from django.db import models
 from phone_bill.core.managers import PhoneBillManager
 
@@ -33,6 +34,41 @@ class CallBilling(models.Model):
     class Meta:
         verbose_name = 'Call Billing'
         verbose_name_plural = 'Call Billings'
+
+    @staticmethod
+    def price_call(start_call, duration_call):
+        """
+        :return: price
+        """
+        standing_price = 0.36
+        minute_price = 0.09
+        price = 0
+        end_call = start_call + timedelta(seconds=duration_call)
+        while start_call < end_call:
+            if 5 <= start_call.hour <= 21:
+                new_start = start_call.replace(hour=22, minute=0, second=0)
+                if new_start > end_call:
+                    new_start = end_call
+                seconds = int((new_start - start_call).total_seconds())
+                price += minute_price * int(seconds/60)
+            else:
+                if start_call.hour < 6 or start_call.hour > 22:
+                    new_start = start_call.replace(hour=6, minute=0, second=0)
+                else:
+                    if start_call.hour == 6:
+                        new_start = start_call.replace(
+                            hour=22, minute=0, second=0
+                        )
+                    elif start_call.hour == 22:
+                        new_start = start_call.replace(
+                            day=start_call.day+1, hour=6, minute=0, second=0
+                        )
+                if new_start > end_call:
+                    new_start = end_call
+            start_call = new_start
+
+        price += standing_price
+        return price
 
 
 class PhoneBill(models.Model):
