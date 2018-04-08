@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from phone_bill.core.models import Call
+from phone_bill.core.models import Call, CallBilling, PhoneBill
 
 
 class CallSerializer(serializers.ModelSerializer):
@@ -58,4 +58,52 @@ class CallSerializer(serializers.ModelSerializer):
         }
 
 
+class PhoneBillSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PhoneBill
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        result = {
+            'source': instance.source,
+            'calls': []
+        }
+        for call in instance.callbilling_set.all():
+            call_serializer = CallBillingSerializer(call).data
+            result['calls'].append(call_serializer)
+
+        return result
+
+
+class CallBillingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CallBilling
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        def format_call_duration(seconds):
+            hours = seconds // 3600
+            minutes = (seconds % 3600) // 60
+            seconds %= 60
+            return '{}h:{}m:{}s'.format(int(hours), int(minutes), int(seconds))
+
+        values = {
+            "destination": instance.destination,
+            "start_date":  instance.start_call.strftime("%d/%m/%Y"),
+            "start_time": instance.start_call.strftime("%H:%M:%S"),
+            "call_duration":  str(format_call_duration(
+                int(instance.duration_call)
+            )),
+            "price":  'R$ {}'.format(instance.price),
+        }
+        return values
+
+    def to_internal_value(self, data):
+        return {
+            "destination": data.get('destination'),
+            "start_call":  data.get('start_call'),
+            "duration_call":  data.get('duration_call'),
+            "price":  None,
+            "phone_bill_id": data.get('phone_bill_id')
+        }
 
