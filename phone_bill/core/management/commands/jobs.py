@@ -13,8 +13,12 @@ scheduler = BackgroundScheduler()
 def save_account():
     now = timezone.now()
     month, year = now.month, now.year
+    call_ids = Call.objects.filter(
+        (Q(timestamp__month=month) & Q(timestamp__year=year)),
+        type_call='end'
+    ).values_list('call_id', flat=True)
     calls = Call.objects.filter(
-        Q(timestamp__month=month) & Q(timestamp__year=year)
+        call_id__in=call_ids
     ).order_by('call_id', 'timestamp')
     PhoneBill.objects.generate_accounts(calls, month, year)
 
