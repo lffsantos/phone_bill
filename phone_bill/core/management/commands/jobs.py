@@ -11,7 +11,6 @@ scheduler = BackgroundScheduler()
 
 @scheduler.scheduled_job('cron', id='close_account', day=9, minute=1)
 def save_account():
-    print("oi")
     now = timezone.now()
     month, year = now.month, now.year
     calls = Call.objects.filter(
