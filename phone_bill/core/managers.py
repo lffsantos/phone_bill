@@ -4,6 +4,7 @@ from django.db import models
 class PhoneBillManager(models.Manager):
 
     def get_account(self, source, month=None, year=None):
+        """ Get phone bill account """
         q_filter = {'source': source}
         if month:
             q_filter['month'] = month
@@ -13,6 +14,11 @@ class PhoneBillManager(models.Manager):
         return phone_bill
 
     def generate_accounts(self, calls, month, year):
+        """
+        :param calls: list of calls(ordered by (call_id, timestamp))
+        :param month: MM
+        :param year: YYYY
+        """
         from phone_bill.core.models import CallBilling
 
         source = {}
@@ -29,6 +35,9 @@ class PhoneBillManager(models.Manager):
                 source[last_source][-1].update({'end_date': call.timestamp})
 
         for key, values in source.items():
+            if self.get_account(source=key, month=month, year=year):
+                continue
+
             phone_bill = self.create(
                 source=key, month=month, year=year, amount=0,
             )
