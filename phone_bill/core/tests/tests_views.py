@@ -55,6 +55,7 @@ class TestGetAccountCall(TestCase):
 
     expected_account = {
         'source': '99988526423',
+        'period': '12/2017',
         'calls': [
             {'price': 'R$ 0.99', 'start_date': '12/12/2017',
              'start_time': '15:07:13', 'call_duration': '0h:7m:43s',
