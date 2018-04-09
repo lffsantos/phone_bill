@@ -12,3 +12,4 @@ APScheduler==3.5.1
 model-mommy==1.5.1
 parameterized==0.6.1
 whitenoise==3.3.0
+gunicorn==19.4.1
