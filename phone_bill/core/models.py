@@ -61,8 +61,8 @@ class CallBilling(models.Model):
                         )
                     elif start_call.hour == 22:
                         new_start = start_call.replace(
-                            day=start_call.day+1, hour=6, minute=0, second=0
-                        )
+                            hour=6, minute=0, second=0
+                        ) + timedelta(days=1)
                 if new_start > end_call:
                     new_start = end_call
             start_call = new_start

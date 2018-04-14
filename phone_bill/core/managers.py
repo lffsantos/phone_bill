@@ -22,17 +22,18 @@ class PhoneBillManager(models.Manager):
         from phone_bill.core.models import CallBilling
 
         source = {}
-        last_source = None
+        last_source = {}
         for call in calls:
-            if call.source and call.source not in source:
-                source[call.source] = []
-                last_source = call.source
+            if call.source:
+                if call.source not in source:
+                    source[call.source] = []
+                last_source[call.call_id] = call.source
             if call.type_call == 'start':
                 source[call.source].append({
                     'destination': call.destination, 'start_date': call.timestamp
                 })
             else:
-                source[last_source][-1].update({'end_date': call.timestamp})
+                source[last_source[call.call_id]][-1].update({'end_date': call.timestamp})
 
         for key, values in source.items():
             if self.get_account(source=key, month=month, year=year):
