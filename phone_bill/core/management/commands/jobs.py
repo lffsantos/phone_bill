@@ -9,7 +9,7 @@ from phone_bill.core.models import Call, PhoneBill
 scheduler = BackgroundScheduler()
 
 
-@scheduler.scheduled_job('cron', id='close_account', day=9, minute=1)
+@scheduler.scheduled_job('cron', id='close_account', day=1, minute=1)
 def save_account():
     now = timezone.now()
     month, year = now.month, now.year
