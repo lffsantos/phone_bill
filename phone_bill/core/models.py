@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, datetime, date
 from django.db import models
 from phone_bill.core.managers import PhoneBillManager
 
@@ -36,33 +36,50 @@ class CallBilling(models.Model):
         verbose_name_plural = 'Call Billings'
 
     @staticmethod
-    def price_call(start_call, duration_call):
+    def price_call(start_call, duration_call, tariff):
         """
+        Calculate price of call
+        :param start_call: datetime
+        :param duration_call: seconds
+        :param tariff: object
         :return: price
         """
-        standing_price = 0.36
-        minute_price = 0.09
+        def str_to_time(str_date):
+            return datetime.strptime(str_date, '%H:%M').time()
+
+        def reduce_second(date_time):
+            return (datetime.combine(
+                date(1, 1, 1), date_time
+            ) - timedelta(seconds=1)).time()
+
+        standing_price = tariff.standing_charge
+        minute_price = tariff.call_charge
         price = 0
         end_call = start_call + timedelta(seconds=duration_call)
+        end_time = str_to_time(tariff.end_time)
+        start_time = str_to_time(tariff.start_time)
         while start_call < end_call:
-            if 5 <= start_call.hour <= 21:
-                new_start = start_call.replace(hour=22, minute=0, second=0)
+            e_hour, e_min = end_time.hour, end_time.minute
+            s_hour, s_min = start_time.hour, start_time.minute
+
+            if reduce_second(start_time) <= start_call.time() <= \
+                    reduce_second(end_time):
+                new_start = start_call.replace(
+                    hour=e_hour, minute=e_min, second=0
+                )
                 if new_start > end_call:
                     new_start = end_call
                 seconds = int((new_start - start_call).total_seconds())
                 price += minute_price * int(seconds/60)
             else:
-                if start_call.hour < 6 or start_call.hour > 22:
-                    new_start = start_call.replace(hour=6, minute=0, second=0)
-                else:
-                    if start_call.hour == 6:
-                        new_start = start_call.replace(
-                            hour=22, minute=0, second=0
-                        )
-                    elif start_call.hour == 22:
-                        new_start = start_call.replace(
-                            day=start_call.day+1, hour=6, minute=0, second=0
-                        )
+                if start_call.time() <= start_time:
+                    new_start = start_call.replace(
+                        hour=s_hour, minute=s_min, second=0
+                    )
+                elif start_call.time() >= end_time:
+                    new_start = start_call.replace(
+                        hour=s_hour, minute=s_min, second=0
+                    ) + timedelta(days=1)
                 if new_start > end_call:
                     new_start = end_call
             start_call = new_start
@@ -82,3 +99,14 @@ class PhoneBill(models.Model):
         verbose_name = 'Phone Bill'
         verbose_name_plural = 'Phone Billings'
         unique_together = (('source', 'month', 'year'), )
+
+
+class Tariff(models.Model):
+    start_time = models.CharField(max_length=5, null=False)
+    end_time = models.CharField(max_length=5, null=False)
+    call_charge = models.FloatField(null=False)
+    standing_charge = models.FloatField(null=False)
+
+    class Meta:
+        verbose_name = 'Tariff'
+        verbose_name_plural = 'Tariffs'

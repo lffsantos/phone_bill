@@ -51,7 +51,7 @@ class TestRegisterCall(TestCase):
 
 class TestGetAccountCall(TestCase):
 
-    fixtures = ['phone_bill/core/fixtures/core.json']
+    fixtures = ['phone_bill/core/tests/fixtures/sample_data.json']
 
     expected_account = {
         'source': '99988526423',
