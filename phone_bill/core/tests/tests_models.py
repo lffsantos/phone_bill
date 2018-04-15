@@ -1,10 +1,11 @@
 import json
 from _datetime import datetime
+from model_mommy import mommy
 
 from parameterized import parameterized
 from django.test import TestCase
 
-from phone_bill.core.models import Call, CallBilling
+from phone_bill.core.models import Call, CallBilling, Tariff
 
 
 class TestCall(TestCase):
@@ -24,6 +25,9 @@ class TestCall(TestCase):
 
 class TestCallBilling(TestCase):
 
+    def setUp(self):
+        self.tariff = mommy.make(Tariff, start_time='06:00', end_time='22:00',
+                                 call_charge=0.09, standing_charge=0.36)
     @parameterized.expand([
         (json.dumps({
             'start': '12/12/2017 15:07:13',
@@ -54,5 +58,5 @@ class TestCallBilling(TestCase):
     def test_price_call(self, data):
         data = json.loads(data)
         start_date = datetime.strptime(data['start'], '%d/%m/%Y %H:%M:%S')
-        price = CallBilling.price_call(start_date, data['duration'])
+        price = CallBilling.price_call(start_date, data['duration'], self.tariff)
         self.assertEqual(str(data['expected_price']), "{:.2f}".format(price))

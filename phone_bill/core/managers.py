@@ -15,12 +15,13 @@ class PhoneBillManager(models.Manager):
 
     def generate_accounts(self, calls, month, year):
         """
+        Generate phone bill for calls using last tariff
         :param calls: list of calls(ordered by (call_id, timestamp))
         :param month: MM
         :param year: YYYY
         """
-        from phone_bill.core.models import CallBilling
-
+        from phone_bill.core.models import CallBilling, Tariff
+        tariff = Tariff.objects.last()
         source = {}
         last_source = {}
         for call in calls:
@@ -45,7 +46,7 @@ class PhoneBillManager(models.Manager):
             amount = 0
             for v in values:
                 duration = (v['end_date'] - v['start_date']).total_seconds()
-                price = CallBilling.price_call(v['start_date'], int(duration))
+                price = CallBilling.price_call(v['start_date'], int(duration), tariff)
                 data = {
                     'destination': v['destination'],
                     'duration_call': duration,

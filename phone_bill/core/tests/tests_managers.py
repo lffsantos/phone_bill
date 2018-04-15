@@ -2,8 +2,9 @@ import json
 
 from django.db.models import Q
 from django.test import TestCase
+from model_mommy import mommy
 from parameterized import parameterized
-from phone_bill.core.models import PhoneBill, Call
+from phone_bill.core.models import PhoneBill, Call, Tariff
 
 
 class TestPhoneBillManager(TestCase):
@@ -42,6 +43,8 @@ class TestPhoneBillManager(TestCase):
     ]
 
     def setUp(self):
+        self.tariff = mommy.make(Tariff, start_time='06:00', end_time='22:00',
+                                 call_charge=0.09, standing_charge=0.36)
         for call in self.calls:
             Call.objects.create(**call)
 
