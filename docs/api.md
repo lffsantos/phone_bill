@@ -12,7 +12,7 @@
     
 *  **URL Params**  
   
-  None  
+    None  
   
 * **Data Params**  
     -   There are two call detailed record types: **Call Start Record** and **Call End Record**.  
@@ -43,7 +43,8 @@
 * **Success Response:**  
   
   * **Code:** 201 <br />  
-    **Content:** 
+    **Content:**  
+     
       If **type = start** 
       ```console
        { 
@@ -80,4 +81,74 @@
   * **Code:** 500 Internal Server Error <br />  
     **Content:** `{"Already register exist with \"id\" "}`  
   
+* **Sample Call:**
+
+
+**Get Phone Bill**  
+----  
+  Return the summary of phone account for month/year
+    
+* **URL**  
+  
+  api/v1/get_phone_bill/  
+  
+* **Method:**  
+  
+  `GET`  
+    
+*  **URL Params**  
+    Required:
+
+    `source=[string]`
+    
+    Optional:
+    
+    `period=[string]` *format MM/YYYY*` 
+  
+* **Data Params**  
+    None
+ 
+  
+* **Success Response:**  
+  
+  * **Code:** 200 <br />  
+    **Content:**  
+    ```
+     {
+        "source": "99988526423",
+        "calls": [
+            {
+                "call_duration": "0h:4m:58s",
+                "destination": "9993468278",
+                "start_date": "12/12/2017",
+                "start_time": "15:07:58",
+                "price": "R$ 0.72"
+            },
+            {
+                "call_duration": "24h:13m:43s",
+                "destination": "9993468278",
+                "start_date": "12/12/2017",
+                "start_time": "21:57:13",
+                "price": "R$ 86.94"
+            }
+        ],
+        "period": "12/2017"
+    }
+    ```
+    
+    Or
+    
+    ```
+    {
+        "ok": "Phone Bill not found"
+    }
+    ```
+* **Error Response:**  
+  
+  * **Code:** 400 Bad Request <br />  
+    **Content:** 
+    ```console
+    {"period": "The format field is MM/YYYY, please informe a valid month/year"}
+    {"source": "this is a required field"}
+
 * **Sample Call:**
