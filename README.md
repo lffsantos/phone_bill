@@ -1,8 +1,11 @@
+[![Build Status](https://travis-ci.org/lffsantos/phone_bill.svg?branch=master)](https://travis-ci.org/lffsantos/phone_bill)
+
 # Phone Bill
 
+The purpose of this code is calculate phone calls and generate account for each client.
 
-
-[![Build Status](https://travis-ci.org/lffsantos/phone_bill.svg?branch=master)](https://travis-ci.org/lffsantos/phone_bill)
+Based on history of calls of each month, the system get all calls from source , 
+taking in consideration the last of tariff registered for calculate the phone bill.
 
 
 ## How to develop?

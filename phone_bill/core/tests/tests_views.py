@@ -102,7 +102,7 @@ class TestGetAccountCall(TestCase):
                         'a valid month/year', result['period']
                     )
                 else:
-                    self.assertEqual('Phone Bill not found', result['error'])
+                    self.assertEqual('Phone Bill not found', result['ok'])
             else:
                 for key, value in self.expected_account.items():
                     if key == 'calls':

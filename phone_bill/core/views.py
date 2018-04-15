@@ -16,7 +16,7 @@ def add_register(request):
     try:
         serializer.save()
     except IntegrityError:
-        return Response({'Already register exist with "id" '})
+        return Response({'Already register exist with "id" '}, status=500)
 
     return Response(serializer.data, status=201)
 
@@ -38,13 +38,13 @@ def get_phone_bill(request):
             return Response({
                 'period': 'The format field is MM/YYYY, please informe a '
                           'valid month/year'
-            })
+            }, status=400)
 
     phone_bill = PhoneBill.objects.get_account(
         source=params.get('source'), month=month, year=year
     )
     if not phone_bill:
-        return Response({'error': 'Phone Bill not found'}, status=200)
+        return Response({'ok': 'Phone Bill not found'}, status=200)
 
     serializer = PhoneBillSerializer(phone_bill)
     return Response(serializer.data, status=200)
