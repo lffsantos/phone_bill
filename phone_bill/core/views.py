@@ -38,13 +38,13 @@ def get_phone_bill(request):
             return Response({
                 'period': 'The format field is MM/YYYY, please informe a '
                           'valid month/year'
-            })
+            }, status=400)
 
     phone_bill = PhoneBill.objects.get_account(
         source=params.get('source'), month=month, year=year
     )
     if not phone_bill:
-        return Response({'error': 'Phone Bill not found'}, status=200)
+        return Response({'ok': 'Phone Bill not found'}, status=200)
 
     serializer = PhoneBillSerializer(phone_bill)
     return Response(serializer.data, status=200)
