@@ -40,9 +40,18 @@ class CallSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({
                 'type': 'this field must be equals a "start" or "end" value '
             })
+        if type_call == 'start' and not data.get('source') and not data.get('destination'):
+            raise serializers.ValidationError({
+                'error': '{source} and {destination} is required for this type'
+            })
+
         if not data.get('timestamp'):
             raise serializers.ValidationError({
                 'timestamp': 'This field is required.'
+            })
+        if not data.get('call_id'):
+            raise serializers.ValidationError({
+                'call_id': 'This field is required.'
             })
         if data.get('call_id') and not isinstance(data.get('call_id'), int):
             raise serializers.ValidationError({

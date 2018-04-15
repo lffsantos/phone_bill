@@ -16,7 +16,7 @@ def add_register(request):
     try:
         serializer.save()
     except IntegrityError:
-        return Response({'Already register exist with "id" '})
+        return Response({'Already register exist with "id" '}, status=500)
 
     return Response(serializer.data, status=201)
 
