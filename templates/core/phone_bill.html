@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="/static/js/main.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+
+    <script>
+        $('#periodDate').datepicker( {
+            format: "mm/yyyy",
+            viewMode: "months",
+            minViewMode: "months"
+        });
+    </script>
+{% endblock %}
+{% block body %}
+  <h1>Phone Bill</h1>
+    <form>
+      <div class="form-row">
+        <div class="form-group col-md-2">
+          <label for="inputSource">Telefone:</label>
+          <input type="text" class="form-control" required id="inputSource" placeholder="Telefone">
+        </div>
+        <div class="form-group col-md-2">
+          <label for="inputPeriod">Periodo</label>
+          <input type="text" class="form-control" data-date-format="mm/yyyy" id="periodDate">
+        </div>
+      </div>
+
+      <br>
+      <button id="bill" class="btn btn-primary">Buscar</button>
+      <br><br>
+      <div id="notAccount" style="display: none">
+          PhoneBill not found!
+      </div>
+      <div id="detailAccount" style="display: none">
+            <br>
+            <div class="row">
+                <div class="col-sm-4" ><b>Telefone: </b><span id="phoneNumber"></span></div>
+                <div class="col-sm-4" ><b>Periodo:</b><span id="period"></span></div>
+                <div class="col-sm-4" ><b>Valor:</b> <span id="amountAccount"></span></div>
+            </div>
+            <br>
+            <table id="sumaryAccount" class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Destination</th>
+                  <th scope="col">Start Date</th>
+                  <th scope="col">Start Time</th>
+                  <th scope="col">Call Duration</th>
+                  <th scope="col">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+      </div>
+    </form>
+{% endblock %}
