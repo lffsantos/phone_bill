@@ -44,7 +44,9 @@
   
   * **Code:** 201 <br />  
     **Content:**  
-     
+      
+      * `timestamp` format YYYY-MM-DD HH:MM:SS'
+      
       If **type = start** 
       ```console
        { 
