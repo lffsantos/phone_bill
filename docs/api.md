@@ -82,6 +82,26 @@
     **Content:** `{"Already register exist with \"id\" "}`  
   
 * **Sample Call:**
+    
+    **Call Start Record:**
+    url: http://<HOST>/api/v1/add_register/
+    ```console
+    {
+        "call_id": 71, "source": "99988526423",
+        "timestamp": "2017-12-12T15:07:13Z", "destination": "9993468278",
+        "id": 1, "type": "start"
+    }
+    ```
+    
+    **Call End Record:**
+    url: http://<HOST>/api/v1/add_register/
+    ```console
+    {
+        "call_id": 71,
+        "timestamp": "2017-12-13T15:07:13Z",
+        "id": 2, "type": "end"
+    }
+    ```
 
 
 **Get Phone Bill**  
@@ -140,7 +160,7 @@
     
     ```
     {
-        "ok": "Phone Bill not found"
+        'calls": [], "source": "99988526423"
     }
     ```
 * **Error Response:**  
@@ -152,3 +172,21 @@
     {"source": "this is a required field"}
 
 * **Sample Call:**
+    
+    url: http://<HOST>/api/v1/get_phone_bill/?source=99988526423&period=03/2018
+    ```console
+    {
+        "source": "99988526423",
+        "calls": [
+            {
+                "destination": "9993468278",
+                "start_date": "12/03/2018",
+                "start_time": "15:07:13",
+                "call_duration": "2h:3m:0s",
+                "price": "R$ 11.43"
+            }
+        ],
+        "period": "3/2018",
+        "amount": 11.43
+    }
+    ```
