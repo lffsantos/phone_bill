@@ -36,11 +36,11 @@ Use the command
 
 List of registered numbers: (number with call in the months of 2017)  
 
-73942315278 
-73888758690 
-77942589011 
-99988526423 
-11894353942 
+- 73942315278 
+- 73888758690 
+- 77942589011 
+- 99988526423 
+- 11894353942 
 
 
 ## Run Project  
