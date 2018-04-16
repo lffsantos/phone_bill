@@ -76,9 +76,10 @@ class PhoneBillSerializer(serializers.ModelSerializer):
         result = {
             'source': instance.source,
             'calls': [],
-            "period": '{}/{}'.format(instance.month, instance.year)
+            "period": '{}/{}'.format(instance.month, instance.year),
+            "amount": instance.amount
         }
-        for call in instance.callbilling_set.all():
+        for call in instance.callbilling_set.all().order_by('start_call'):
             call_serializer = CallBillingSerializer(call).data
             result['calls'].append(call_serializer)
 

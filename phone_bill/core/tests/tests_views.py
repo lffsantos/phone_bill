@@ -57,24 +57,25 @@ class TestGetAccountCall(TestCase):
         'source': '99988526423',
         'period': '12/2017',
         'calls': [
+            {'price': 'R$ 1.26', 'start_date': '12/12/2017',
+             'start_time': '04:57:13', 'call_duration': '1h:13m:43s',
+             'destination': '9993468278'},
             {'price': 'R$ 0.99', 'start_date': '12/12/2017',
              'start_time': '15:07:13', 'call_duration': '0h:7m:43s',
              'destination': '9993468278'},
-            {'price': 'R$ 0.36', 'start_date': '12/12/2017',
-             'start_time': '22:47:56', 'call_duration': '0h:3m:0s',
+            {'price': 'R$ 0.72', 'start_date': '12/12/2017',
+             'start_time': '15:07:58', 'call_duration': '0h:4m:58s',
              'destination': '9993468278'},
             {'price': 'R$ 0.54', 'start_date': '12/12/2017',
              'start_time': '21:57:13', 'call_duration': '0h:13m:43s',
              'destination': '9993468278'},
-            {'price': 'R$ 1.26', 'start_date': '12/12/2017',
-             'start_time': '04:57:13', 'call_duration': '1h:13m:43s',
-             'destination': '9993468278'},
             {'price': 'R$ 86.94', 'start_date': '12/12/2017',
              'start_time': '21:57:13', 'call_duration': '24h:13m:43s',
              'destination': '9993468278'},
-            {'price': 'R$ 0.72', 'start_date': '12/12/2017',
-             'start_time': '15:07:58', 'call_duration': '0h:4m:58s',
-             'destination': '9993468278'}],
+            {'price': 'R$ 0.36', 'start_date': '12/12/2017',
+             'start_time': '22:47:56', 'call_duration': '0h:3m:0s',
+             'destination': '9993468278'}
+            ],
     }
 
     @parameterized.expand([
@@ -102,7 +103,7 @@ class TestGetAccountCall(TestCase):
                         'a valid month/year', result['period']
                     )
                 else:
-                    self.assertEqual('Phone Bill not found', result['ok'])
+                    self.assertTrue(len(result['calls']) == 0)
             else:
                 for key, value in self.expected_account.items():
                     if key == 'calls':

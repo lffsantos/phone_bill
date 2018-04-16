@@ -24,7 +24,8 @@ def add_register(request):
 @api_view(['GET'])
 def get_phone_bill(request):
     params = request.query_params
-    if not params.get('source'):
+    source = params.get('source')
+    if not source:
         return Response({'source': 'this is a required field'}, status=400)
     period = params.get('period')
     month, year = None, None
@@ -40,11 +41,12 @@ def get_phone_bill(request):
                           'valid month/year'
             }, status=400)
 
+    month = int(month) if month else None
     phone_bill = PhoneBill.objects.get_account(
-        source=params.get('source'), month=month, year=year
+        source=source, month=month, year=year
     )
     if not phone_bill:
-        return Response({'ok': 'Phone Bill not found'}, status=200)
+        return Response({'calls': [], 'source': source}, status=200)
 
     serializer = PhoneBillSerializer(phone_bill)
     return Response(serializer.data, status=200)
