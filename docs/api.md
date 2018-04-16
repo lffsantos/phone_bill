@@ -173,7 +173,7 @@
 
 * **Sample Call:**
     
-    url: http://<HOST>/api/v1/get_phone_bill/?source=99988526423&period=03/2018
+    url: http://HOST/api/v1/get_phone_bill/?source=99988526423&period=03/2018
     ```console
     {
         "source": "99988526423",
