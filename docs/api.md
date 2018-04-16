@@ -84,7 +84,7 @@
 * **Sample Call:**
     
     **Call Start Record:**
-    url: http://<HOST>/api/v1/add_register/
+    url: http://HOST/api/v1/add_register/
     ```console
     {
         "call_id": 71, "source": "99988526423",
@@ -94,7 +94,7 @@
     ```
     
     **Call End Record:**
-    url: http://<HOST>/api/v1/add_register/
+    url: http://HOST/api/v1/add_register/
     ```console
     {
         "call_id": 71,
