@@ -1,6 +1,13 @@
+
+$( function() {
+    $( document ).tooltip();
+});
 $( "#bill" ).click(function( event ) {
     clear();
     var source = $('#inputSource').val();
+    if(source == ''){
+        alert('Por Favor insira um Numero de Telefone!')
+    }
     var period = $('#periodDate').val();
     if(period == undefined){
         period = ''
