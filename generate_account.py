@@ -1,3 +1,5 @@
+import django
+django.setup()
 from datetime import timedelta
 from apscheduler.schedulers.background import BackgroundScheduler
 from django.db.models import Q
