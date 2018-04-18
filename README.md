@@ -8,6 +8,15 @@ Based on history of calls of each month, the system get all calls from source ,
 taking in consideration the last of tariff registered for calculate the phone bill.
 
 
+## How the system works
+
+Exists a scheduler that run every month on the first minute,   
+this job filter search all calls for every source in the last month   
+and then generate the bills  
+To calculate an account is used the rates registered in the database,   
+this rate can be changed, but a closed account will not be recalculated  
+
+
 ## How to develop?
 
 1. Clone the repository.
