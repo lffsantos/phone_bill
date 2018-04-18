@@ -26,3 +26,23 @@ pip install -r requirements.txt
 cp contrib/env-sample .env
 python manage.py test
 ```
+
+## Load Initial Data
+
+The project contains a sample datas for testing the system.  
+Use the command
+
+> python manage.py loaddata core
+
+List of registered numbers: (number with call in the months of 2017)  
+
+- 73942315278 
+- 73888758690 
+- 77942589011 
+- 99988526423 
+- 11894353942 
+
+
+## Run Project  
+
+> python manage.py runserver
