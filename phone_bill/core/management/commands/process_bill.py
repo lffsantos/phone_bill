@@ -1,4 +1,3 @@
-import argparse
 from django.core.management.base import BaseCommand
 from django.db.models import Q
 from django.utils import timezone
@@ -19,6 +18,9 @@ def save_account(month, year):
 class Command(BaseCommand):
 
     def add_arguments(self, parser):
+        parser.add_argument(
+            "-r", "--recalculate", help="Recalculate Phone Bill if exists", type=bool
+        )
         parser.add_argument("-m", "--month", help="number between 1-12", type=int)
         parser.add_argument("-y", "--year", type=int)
 
@@ -31,4 +33,7 @@ class Command(BaseCommand):
             if month >= now.month and year >= now.year:
                 print('Please inform a shorter date!')
             else:
+                if options.get('recalculate'):
+                    accounts = PhoneBill.objects.filter(month=month, year=year)
+                    accounts.delete()
                 save_account(month, year)
