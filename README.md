@@ -49,6 +49,13 @@ cp contrib/env-sample .env
 python manage.py test
 ```
 
+## Create Database
+
+Before load data make a database the same name registered on you file .env and execute the migrations.
+
+> python manage.py migrate
+
+
 ## Load Initial Data
 
 The project contains a sample datas for testing the system.  
@@ -65,14 +72,14 @@ List of registered numbers: (number with call in the months of 2017)
 - 11894353942 
 
 
-## Run Project  
-
-> python manage.py runserver
-
-
 ## Create SuperUser for access admin interface
 
 > python manage.py createsuperuser
+
+
+## Run Project  
+
+> python manage.py runserver
 
 
 ## How to change Tariff
@@ -82,7 +89,7 @@ The system automatically will consider the last.
 
 ## Test 
 
-For test you can call the command bellow for generate the phone bill  
+For test you can call the command bellow for generate the phone bill if you add a new registers
 
 > python manage.py python manage.py process_bill -m INT -y INT 
 
