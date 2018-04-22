@@ -10,7 +10,7 @@ class PhoneBillManager(models.Manager):
             q_filter['month'] = month
         if year:
             q_filter['year'] = year
-        phone_bill = self.filter(**q_filter).last()
+        phone_bill = self.filter(**q_filter).order_by('year', 'month').last()
         return phone_bill
 
     def generate_accounts(self, calls, month, year):
