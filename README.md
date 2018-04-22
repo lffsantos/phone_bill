@@ -70,6 +70,16 @@ List of registered numbers: (number with call in the months of 2017)
 > python manage.py runserver
 
 
+## Create SuperUser for access admin interface
+
+> python manage.py createsuperuser
+
+
+## How to change Tariff
+
+If you want to change the tariff is necessary access the admin interface and change the last tariff registered or add a new.
+The system automatically will consider the last.
+
 ## Test 
 
 For test you can call the command bellow for generate the phone bill  
@@ -79,5 +89,3 @@ For test you can call the command bellow for generate the phone bill
 Use the option -r if you want recalculate the account  
 
 > python manage.py python manage.py process_bill -m INT -y INT -r True
-
-
