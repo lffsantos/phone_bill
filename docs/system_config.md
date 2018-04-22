@@ -21,6 +21,9 @@
     - Python Decouple, for ready env variables 
     - Psycopg2, for using Postresql database  
     
+- Basic Front-End
+    - Bootstrap
+    - Jquery
     
     
     

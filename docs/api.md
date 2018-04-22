@@ -22,7 +22,7 @@
         { 
 	       "id":[integer]  // Record unique identificator;
 	       "type":[string]  // Indicate if it's a call "start" or "end" record; 
-	       "timestamp":[string]  // The timestamp of when the event occured; 
+	       "timestamp":[string]  // The timestamp of when the event occured (format 'YYYY-MM-DD HH:MM:SS'); 
 	       "call_id":[integer]  // Unique for each call record pair; 
 	       "source":[string]  // The subscriber phone number that originated the call; 
 	       "destination":[string]  // The phone number receiving the call. 
@@ -34,7 +34,7 @@
         { 
 	       "id":[integer]  // Record unique identificator;
 	       "type":[string]  // Indicate if it's a call "start" or "end" record; 
-	       "timestamp":[string]  // The timestamp of when the event occured; 
+	       "timestamp":[string]  // The timestamp of when the event occured (format 'YYYY-MM-DD HH:MM:SS'); 
 	       "call_id":[integer]  // Unique for each call record pair; 
 	     } 
         ```

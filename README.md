@@ -1,11 +1,13 @@
 [![Build Status](https://travis-ci.org/lffsantos/phone_bill.svg?branch=master)](https://travis-ci.org/lffsantos/phone_bill)
 
-# Phone Bill
+# API to get Phone Bill 
 
 The purpose of this code is calculate phone calls and generate account for each client.
 
 Based on history of calls of each month, the system get all calls from source , 
 taking in consideration the last of tariff registered for calculate the phone bill.
+    
+You can check the api documentation [here](https://github.com/lffsantos/phone_bill/blob/master/docs/api.md).
 
 
 ## How the system works
@@ -15,6 +17,7 @@ this job filter search all calls for every source in the last month
 and then generate the bills  
 To calculate an account is used the rates registered in the database,   
 this rate can be changed, but a closed account will not be recalculated  
+The values of the calls are all calculated at the end of the month.  
 
 ### Pricing rules 
 
@@ -96,3 +99,9 @@ For test you can call the command bellow for generate the phone bill if you add 
 Use the option -r if you want recalculate the account  
 
 > python manage.py python manage.py process_bill -m INT -y INT -r True
+
+
+# DOCUMENTS:
+
+[api doc](https://github.com/lffsantos/phone_bill/blob/master/docs/api.md)
+[work environment](https://github.com/lffsantos/phone_bill/blob/master/docs/system_config.md)
