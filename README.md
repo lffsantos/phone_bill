@@ -12,11 +12,8 @@ You can check the api documentation [here](https://github.com/lffsantos/phone_bi
 
 ## How the system works
 
-Exists a scheduler that run every month on the first minute,   
-this job filter search all calls for every source in the last month   
-and then generate the bills  
-To calculate an account is used the rates registered in the database,   
-this rate can be changed, but a closed account will not be recalculated  
+Exists a scheduler that run every month on the first minute, this job filter search all calls for every source in the last month and then generate the bills  
+To calculate an account is used the rates registered in the database, this rate can be changed, but a closed account will not be recalculated  
 The values of the calls are all calculated at the end of the month.  
 
 ### Pricing rules 
@@ -94,14 +91,15 @@ The system automatically will consider the last.
 
 For test you can call the command bellow for generate the phone bill if you add a new registers
 
-> python manage.py python manage.py process_bill -m INT -y INT 
+> python manage.py process_bill -m INT -y INT 
 
 Use the option -r if you want recalculate the account  
 
-> python manage.py python manage.py process_bill -m INT -y INT -r True
+> python manage.py process_bill -m INT -y INT -r True
 
 
-# DOCUMENTS:
+# Documents:
 
-[api doc](https://github.com/lffsantos/phone_bill/blob/master/docs/api.md)
-[work environment](https://github.com/lffsantos/phone_bill/blob/master/docs/system_config.md)
+[api doc](https://github.com/lffsantos/phone_bill/blob/master/docs/api.md)    
+
+[work environment](https://github.com/lffsantos/phone_bill/blob/master/docs/system_config.md)    
