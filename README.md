@@ -87,7 +87,7 @@ List of registered numbers: (number with call in the months of 2017)
 If you want to change the tariff is necessary access the admin interface and change the last tariff registered or add a new.
 The system automatically will consider the last.
 
-## Test 
+## Run bill process manually
 
 For test you can call the command bellow for generate the phone bill if you add a new registers
 
